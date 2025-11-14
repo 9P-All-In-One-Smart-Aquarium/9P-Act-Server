@@ -224,7 +224,6 @@ def send_mobius_command(target_cnt_url: str, command: str) -> bool:
     return False
 
 # --- FCM v1 API (OAuth 2.0) Functions ---
-
 # Loads the `fcm-service-account.json` file on server start
 # to initialize `g_fcm_creds` (the FCM authentication object).
 def init_fcm_auth():
@@ -380,17 +379,6 @@ def sensor_debounce_handler():
 # ================================================================
 # === Notification Handlers ======================================
 # ================================================================
-
-# (Note: These functions are called by `_process_notification_worker`)
-
-# (This is no longer used, as `_process_notification_worker` handles sensor logic directly)
-def handle_sensor_group_notification(content):
-    pass 
-
-# (This is no longer used, as `_process_notification_worker` handles threshold logic directly)
-def handle_threshold_group_notification(content):
-    pass
-
 # Handles notifications from the App (FCM token, feeding schedule)
 def handle_app_notification(cnt, content):
     cnt = cnt.lower()
@@ -638,14 +626,11 @@ def check_and_create_subscription():
     logger.info("Creating subscriptions for group resources...")
     for target in SUBSCRIPTION_RESOURCE_URLS:
 
-        # (Note: The `rn` (resource name) should ideally be unique for each subscription)
-        # (The line below is commented out but is best practice)
         sub_name = f"sub-logic-{target.split('/')[-1]}"
         
         payload = {
             "m2m:sub": {
-                # (Best practice: change "sub-logic" to `sub_name` to avoid 409 conflicts)
-                "rn": "sub-logic", 
+                "rn": "sub_name", 
                 "nu": [f"http://localhost:{FLASK_PORT}/notification"], # (URL to send alerts to)
                 
                 # (Important) nct=1: Include the full `m2m:cin` object in the notification
