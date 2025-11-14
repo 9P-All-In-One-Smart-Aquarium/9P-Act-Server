@@ -13,7 +13,7 @@ This server follows a **Publish/Subscribe** model centered around Mobius (the CS
 1.  **Publish:**
     * `AE-Sensor` (ESP32) `POST`s temperature, light, and water level data to Mobius.
     * `AE-Rapi` (AI Server) `POST`s fish health status (normal/disease) data.
-    * `AE-App` (Mobile App) `POST`s thresholds, feeding times, and the FCM token.
+    * `AE-App` (Mobile App) `POST`s thresholds, feeding times, pump, and the FCM token.
 2.  **Subscribe:**
     * The `AE-Logic` server (this code) **subscribes to all Containers (CNTs)** listed in `SUBSCRIPTION_RESOURCE_URLS` upon startup.
 3.  **Notification:**
@@ -63,3 +63,4 @@ This server follows a **Publish/Subscribe** model centered around Mobius (the CS
 -   `send_fcm_push` uses the obtained auth token to send push notifications to the mobile app via the modern **FCM HTTP v1 API**.
 
 ---
+
